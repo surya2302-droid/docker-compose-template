@@ -1,0 +1,14 @@
+version: '3.0'
+
+services:
+  freshrss:
+    container_name: freshrss
+    image: linuxserver/freshrss:latest@sha256:bb923a66762a1d7578dde34d5bb474eb964ea89f0e4626f253bb2da966684206
+    ports:
+      - "8132:80/tcp"
+    environment:
+      TZ: 'Asia/Kolkata'
+    # Volumes store your data between container upgrades
+    volumes:
+      - '/portainer/Files/AppData/Config/freshrss:/config'
+    restart: unless-stopped

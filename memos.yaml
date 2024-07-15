@@ -1,0 +1,14 @@
+version: '3.0'
+
+services:
+  memos:
+    container_name: memos
+    image: 	ghcr.io/usememos/memos:latest@sha256:67fbe03279acdfbce80022231baeb7b4b4755ddf020315b7ce7e9f57cd13a8d3
+    ports:
+      - "5230:5230/tcp"
+    environment:
+      TZ: 'Asia/Kolkata'
+    # Volumes store your data between container upgrades
+    volumes:
+      - '/home/ubuntu/memos/Config/Memos:/var/opt/memos'
+    restart: unless-stopped
