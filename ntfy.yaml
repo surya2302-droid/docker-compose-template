@@ -1,0 +1,1 @@
+sudo docker run -v /var/cache/ntfy:/var/cache/ntfy -v /etc/ntfy:/etc/ntfy -p 80:80 -itd binwiederhier/ntfy serve --cache-file /var/cache/ntfy/cache.db

@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    ports:
+      - 13378:80
+    volumes:
+      - /home/pi/NAS_STORAGE/audio-books:/audiobooks
+      - /home/pi/audiobookshelf/podcasts:/podcasts
+      - /home/pi/audiobookshelf/config:/config
+      - /home/pi/audiobookshelf/metadata:/metadata

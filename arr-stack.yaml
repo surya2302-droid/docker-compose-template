@@ -1,0 +1,267 @@
+services:
+
+  homarr:
+
+    container_name: "homarr"
+
+    entrypoint:
+      - "sh"
+      - "./scripts/run.sh"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "NODE_VERSION=20.2.0"
+      - "YARN_VERSION=1.22.19"
+      - "NEXT_TELEMETRY_DISABLED=1"
+      - "NODE_ENV=production"
+      - "NODE_OPTIONS=--no-experimental-fetch"
+      - "PORT=7575"
+      - "DATABASE_URL=file:/data/db.sqlite"
+      - "NEXTAUTH_URL=http://localhost:7575"
+      - "NEXTAUTH_SECRET=NOT_IN_USE_BECAUSE_JWTS_ARE_UNUSED"
+
+    hostname: "d812b2b626a9"
+
+    image: "ghcr.io/ajnart/homarr:latest"
+
+    ipc: "private"
+
+    labels:
+      org.opencontainers.image.created: "2023-12-31T11:39:59.537Z"
+      org.opencontainers.image.description: "Customizable browser's home page to interact with your homeserver's\
+        \ Docker containers (e.g. Sonarr/Radarr)"
+      org.opencontainers.image.licenses: "MIT"
+      org.opencontainers.image.revision: "b4a8d47636c5495a3312d5d72e3d14e7573fc7c8"
+      org.opencontainers.image.source: "https://github.com/ajnart/homarr"
+      org.opencontainers.image.title: "homarr"
+      org.opencontainers.image.url: "https://github.com/ajnart/homarr"
+      org.opencontainers.image.version: "0.14.3"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:10"
+
+    network_mode: "bridge"
+
+    ports:
+      - "7575:7575/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/portainer/Files/AppData/Config/Homarr/configs:/app/data/configs"
+      - "/portainer/Files/AppData/Config/Homarr/icons:/app/public/icons"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "39ba8e1c9b3f3d746e5bcbf82f52ee450798f1770692f1726c09650ca9ff0f63:/data"
+
+    working_dir: "/app"
+
+  prowlarr:
+
+    container_name: "prowlarr"
+
+    entrypoint:
+      - "/init"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=America/New_York"
+      - "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "PS1=$(whoami)@$(hostname):$(pwd)\\$ "
+      - "HOME=/root"
+      - "TERM=xterm"
+      - "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0"
+      - "S6_VERBOSITY=1"
+      - "S6_STAGE2_HOOK=/docker-mods"
+      - "VIRTUAL_ENV=/lsiopy"
+      - "LSIO_FIRST_PARTY=true"
+      - "XDG_CONFIG_HOME=/config/xdg"
+
+    hostname: "5a5ee62da8b5"
+
+    image: "lscr.io/linuxserver/prowlarr:develop"
+
+    ipc: "private"
+
+    labels:
+      build_version: "Linuxserver.io version:- 1.11.4.4173-ls142 Build-date:- 2023-12-31T05:06:27+00:00"
+      maintainer: "Roxedus,thespad"
+      org.opencontainers.image.authors: "linuxserver.io"
+      org.opencontainers.image.created: "2023-12-31T05:06:27+00:00"
+      org.opencontainers.image.description: "[Prowlarr](https://github.com/Prowlarr/Prowlarr) is a indexer\
+        \ manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various\
+        \ PVR apps. Prowlarr supports both Torrent Trackers and Usenet Indexers. It integrates seamlessly\
+        \ with Sonarr, Radarr, Lidarr, and Readarr offering complete management of your indexers with\
+        \ no per app Indexer setup required (we do it all).  "
+      org.opencontainers.image.documentation: "https://docs.linuxserver.io/images/docker-prowlarr"
+      org.opencontainers.image.licenses: "GPL-3.0-only"
+      org.opencontainers.image.ref.name: "c386e6f3e572d3bb745b5a0765339171e8760596"
+      org.opencontainers.image.revision: "c386e6f3e572d3bb745b5a0765339171e8760596"
+      org.opencontainers.image.source: "https://github.com/linuxserver/docker-prowlarr"
+      org.opencontainers.image.title: "Prowlarr"
+      org.opencontainers.image.url: "https://github.com/linuxserver/docker-prowlarr/packages"
+      org.opencontainers.image.vendor: "linuxserver.io"
+      org.opencontainers.image.version: "1.11.4.4173-ls142"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:07"
+
+    network_mode: "bridge"
+
+    ports:
+      - "9696:9696/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/portainer/Files/AppData/Config/prowlarr:/config"
+
+    working_dir: "/"
+
+  radarr:
+
+    container_name: "radarr"
+
+    entrypoint:
+      - "/init"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "PS1=$(whoami)@$(hostname):$(pwd)\\$ "
+      - "HOME=/root"
+      - "TERM=xterm"
+      - "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0"
+      - "S6_VERBOSITY=1"
+      - "S6_STAGE2_HOOK=/docker-mods"
+      - "VIRTUAL_ENV=/lsiopy"
+      - "LSIO_FIRST_PARTY=true"
+      - "XDG_CONFIG_HOME=/config/xdg"
+
+    hostname: "04c1faa58e0d"
+
+    image: "linuxserver/radarr:latest"
+
+    ipc: "private"
+
+    labels:
+      build_version: "Linuxserver.io version:- 5.2.6.8376-ls198 Build-date:- 2023-12-31T16:57:38+00:00"
+      maintainer: "thelamer"
+      org.opencontainers.image.authors: "linuxserver.io"
+      org.opencontainers.image.created: "2023-12-31T16:57:38+00:00"
+      org.opencontainers.image.description: "[Radarr](https://github.com/Radarr/Radarr) - A fork of Sonarr\
+        \ to work with movies à la Couchpotato.  "
+      org.opencontainers.image.documentation: "https://docs.linuxserver.io/images/docker-radarr"
+      org.opencontainers.image.licenses: "GPL-3.0-only"
+      org.opencontainers.image.ref.name: "d27e01a33e0a62cbfd462f5c1ebec65b075540cb"
+      org.opencontainers.image.revision: "d27e01a33e0a62cbfd462f5c1ebec65b075540cb"
+      org.opencontainers.image.source: "https://github.com/linuxserver/docker-radarr"
+      org.opencontainers.image.title: "Radarr"
+      org.opencontainers.image.url: "https://github.com/linuxserver/docker-radarr/packages"
+      org.opencontainers.image.vendor: "linuxserver.io"
+      org.opencontainers.image.version: "5.2.6.8376-ls198"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:05"
+
+    network_mode: "bridge"
+
+    ports:
+      - "7878:7878/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/home/surya/arr-stack/downloads:/downloads"
+      - "/home/surya/arr-stack/mv:/movies"
+      - "/portainer/Files/AppData/Config/Radarr:/config"
+
+    working_dir: "/"
+
+  sonarr:
+
+    container_name: "sonarr"
+
+    entrypoint:
+      - "/init"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "PS1=$(whoami)@$(hostname):$(pwd)\\$ "
+      - "HOME=/root"
+      - "TERM=xterm"
+      - "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0"
+      - "S6_VERBOSITY=1"
+      - "S6_STAGE2_HOOK=/docker-mods"
+      - "VIRTUAL_ENV=/lsiopy"
+      - "LSIO_FIRST_PARTY=true"
+      - "XDG_CONFIG_HOME=/config/xdg"
+      - "SONARR_CHANNEL=v4-stable"
+      - "SONARR_BRANCH=main"
+
+    hostname: "fd3de2cf285d"
+
+    image: "linuxserver/sonarr:latest"
+
+    ipc: "private"
+
+    labels:
+      build_version: "Linuxserver.io version:- 4.0.0.748-ls220 Build-date:- 2024-01-01T01:43:49+00:00"
+      maintainer: "thespad"
+      org.opencontainers.image.authors: "linuxserver.io"
+      org.opencontainers.image.created: "2024-01-01T01:43:49+00:00"
+      org.opencontainers.image.description: "[Sonarr](https://sonarr.tv/) (formerly NZBdrone) is a PVR\
+        \ for usenet and bittorrent users. It can monitor multiple RSS feeds for new episodes of your\
+        \ favorite shows and will grab, sort and rename them. It can also be configured to automatically\
+        \ upgrade the quality of files already downloaded when a better quality format becomes available.\
+        \  "
+      org.opencontainers.image.documentation: "https://docs.linuxserver.io/images/docker-sonarr"
+      org.opencontainers.image.licenses: "GPL-3.0-only"
+      org.opencontainers.image.ref.name: "7d9224748afa24a5db9312737fc2e7363731a248"
+      org.opencontainers.image.revision: "7d9224748afa24a5db9312737fc2e7363731a248"
+      org.opencontainers.image.source: "https://github.com/linuxserver/docker-sonarr"
+      org.opencontainers.image.title: "Sonarr"
+      org.opencontainers.image.url: "https://github.com/linuxserver/docker-sonarr/packages"
+      org.opencontainers.image.vendor: "linuxserver.io"
+      org.opencontainers.image.version: "4.0.0.748-ls220"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:09"
+
+    network_mode: "bridge"
+
+    ports:
+      - "8989:8989/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/dev/rtc:/dev/rtc"
+      - "/home/surya/arr-stack/downloads:/downloads"
+      - "/home/surya/arr-stack/tv:/tv"
+      - "/portainer/Files/AppData/Config/Sonarr:/config"
+
+    working_dir: "/"
+
+version: "3.6"
+
+volumes:
+  39ba8e1c9b3f3d746e5bcbf82f52ee450798f1770692f1726c09650ca9ff0f63:
+    external: true

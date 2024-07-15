@@ -1,0 +1,39 @@
+services:
+  portainer:
+    container_name: "portainer"
+
+    entrypoint:
+      - "/portainer"
+
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+    hostname: "24a3906b2f45"
+
+    image: "portainer/portainer-ce:latest"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:0d"
+
+    network_mode: "bridge"
+
+    ports:
+      - "9000:9000/tcp"
+      - "9443:9443/tcp"
+
+    restart: "always"
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "portainer_data:/data"
+
+    working_dir: "/"
+
+version: "3.6"
+
+volumes:
+  portainer_data:
+    external: true

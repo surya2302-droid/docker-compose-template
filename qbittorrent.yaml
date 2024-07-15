@@ -1,0 +1,69 @@
+services:
+  qbittorrent:
+
+    container_name: "qbittorrent"
+
+    entrypoint:
+      - "/init"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "PS1=$(whoami)@$(hostname):$(pwd)\\$ "
+      - "HOME=/config"
+      - "TERM=xterm"
+      - "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0"
+      - "S6_VERBOSITY=1"
+      - "S6_STAGE2_HOOK=/docker-mods"
+      - "VIRTUAL_ENV=/lsiopy"
+      - "LSIO_FIRST_PARTY=true"
+      - "XDG_CONFIG_HOME=/config"
+      - "XDG_DATA_HOME=/config"
+
+    hostname: "ecb9d7fead37"
+
+    image: "linuxserver/qbittorrent:latest"
+
+    ipc: "private"
+
+    labels:
+      build_version: "Linuxserver.io version:- 4.6.2-r0-ls304 Build-date:- 2023-12-31T06:53:55+00:00"
+      maintainer: "thespad"
+      org.opencontainers.image.authors: "linuxserver.io"
+      org.opencontainers.image.created: "2023-12-31T06:53:55+00:00"
+      org.opencontainers.image.description: "The [Qbittorrent](https://www.qbittorrent.org/) project aims\
+        \ to provide an open-source software alternative to µTorrent. qBittorrent is based on the Qt toolkit\
+        \ and libtorrent-rasterbar library."
+      org.opencontainers.image.documentation: "https://docs.linuxserver.io/images/docker-qbittorrent"
+      org.opencontainers.image.licenses: "GPL-3.0-only"
+      org.opencontainers.image.ref.name: "953db8a8b278ce5c3cf14de1c17be211876d0d0c"
+      org.opencontainers.image.revision: "953db8a8b278ce5c3cf14de1c17be211876d0d0c"
+      org.opencontainers.image.source: "https://github.com/linuxserver/docker-qbittorrent"
+      org.opencontainers.image.title: "Qbittorrent"
+      org.opencontainers.image.url: "https://github.com/linuxserver/docker-qbittorrent/packages"
+      org.opencontainers.image.vendor: "linuxserver.io"
+      org.opencontainers.image.version: "4.6.2-r0-ls304"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:03"
+
+    network_mode: "bridge"
+
+    ports:
+      - "6881:6881/tcp"
+      - "6881:6881/udp"
+      - "8080:8080/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/home/surya/arr-stack/downloads:/downloads"
+      - "/portainer/Files/AppData/Config/qBittorrent:/config"
+
+    working_dir: "/"
+
+version: "3.6"

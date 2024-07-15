@@ -1,0 +1,67 @@
+services:
+  nginx-proxy-manager-sqlite:
+
+    container_name: "nginx-proxy-manager-sqlite"
+
+    entrypoint:
+      - "/init"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Kolkata/Asia"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+      - "OPENRESTY_VERSION=1.21.4.2"
+      - "CROWDSEC_OPENRESTY_BOUNCER_VERSION=0.1.7"
+      - "CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt"
+      - "SUPPRESS_NO_CONFIG_WARNING=1"
+      - "S6_BEHAVIOUR_IF_STAGE2_FAILS=1"
+      - "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0"
+      - "S6_FIX_ATTRS_HIDDEN=1"
+      - "S6_KILL_FINISH_MAXTIME=10000"
+      - "S6_VERBOSITY=1"
+      - "NODE_ENV=production"
+      - "NPM_BUILD_VERSION=2.10.4"
+      - "NPM_BUILD_COMMIT=d1d1819"
+      - "NPM_BUILD_DATE=2023-11-22 01:06:49 UTC"
+
+    hostname: "c141a70ae209"
+
+    image: "jc21/nginx-proxy-manager:latest"
+
+    ipc: "private"
+
+    labels:
+      maintainer: "Jamie Curnow <jc@jc21.com>"
+      org.label-schema.cmd: "docker run --rm -ti jc21/nginx-proxy-manager:latest"
+      org.label-schema.description: "Docker container for managing Nginx proxy hosts with a simple, powerful\
+        \ interface "
+      org.label-schema.license: "MIT"
+      org.label-schema.name: "nginx-proxy-manager"
+      org.label-schema.schema-version: "1.0"
+      org.label-schema.url: "https://github.com/jc21/nginx-proxy-manager"
+      org.label-schema.vcs-url: "https://github.com/jc21/nginx-proxy-manager.git"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    mac_address: "02:42:ac:11:00:0f"
+
+    network_mode: "bridge"
+
+    ports:
+      - "443:443/tcp"
+      - "80:80/tcp"
+      - "81:81/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/portainer/Files/AppData/Config/nginx-proxy-manager/data:/data"
+      - "/portainer/Files/AppData/Config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt"
+
+    working_dir: "/app"
+
+version: "3.6"

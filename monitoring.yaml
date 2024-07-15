@@ -1,0 +1,56 @@
+version: "2.4"
+services:
+
+  node-exporter:
+    container_name: monitoring-node-exporter
+    expose:
+      - 9100
+    hostname: rpi-exporter
+    image: prom/node-exporter:latest
+    networks:
+      - rpimonitor_default
+    restart: unless-stopped
+
+  prometheus:
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=${PROMETHEUS_RETENTION:-15d}'
+    container_name: monitoring-prometheus
+    expose:
+      - 9090
+    hostname: rpi-prom
+    image: prom/prometheus:latest
+    user: root
+    networks:
+      - rpimonitor_default
+    restart: unless-stopped
+    volumes:
+      # to be modified depending on your needs
+      - /portainer/Files/AppData/Config/prometheus/data:/prometheus
+      - /portainer/Files/AppData/Config/prometheus/config:/etc/prometheus/
+    links:
+      - node-exporter:node-exporter
+
+networks:
+  rpimonitor_default:
+
+#### prometheus.yml
+
+# global:
+#   scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+#   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+#   # scrape_timeout is set to the global default (10s).
+
+# scrape_configs:
+#   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+#   - job_name: 'prometheus'
+#     # Override the global default and scrape targets from this job every 5 seconds.
+#     scrape_interval: 5s
+#     static_configs:
+#          - targets: ['localhost:9090']
+
+#   - job_name: 'node-exporter'
+#     scrape_interval: 5s
+#     static_configs:
+#       - targets: ['node-exporter:9100']

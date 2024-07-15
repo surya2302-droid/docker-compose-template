@@ -1,0 +1,36 @@
+services:
+  influxdb:
+    command:
+      - "influxd"
+    container_name: "influxdb"
+    entrypoint:
+      - "/entrypoint.sh"
+    environment:
+      - "DOCKER_INFLUXDB_INIT_MODE=setup"
+      - "DOCKER_INFLUXDB_INIT_USERNAME=surya"
+      - "DOCKER_INFLUXDB_INIT_PASSWORD=$$$$$$$$$$$$"
+      - "DOCKER_INFLUXDB_INIT_ORG=your-initial-organisation"
+      - "DOCKER_INFLUXDB_INIT_BUCKET=storage"
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "GOSU_VER=1.16"
+      - "INFLUXDB_VERSION=2.7.5"
+      - "INFLUX_CLI_VERSION=2.7.3"
+      - "INFLUX_CONFIGS_PATH=/etc/influxdb2/influx-configs"
+      - "INFLUXD_INIT_PORT=9999"
+      - "INFLUXD_INIT_PING_ATTEMPTS=600"
+      - "DOCKER_INFLUXDB_INIT_CLI_CONFIG_NAME=default"
+    hostname: "rpi-influxdb"
+    image: "influxdb:latest"
+    ipc: "private"
+    logging:
+      driver: "json-file"
+      options: {}
+    mac_address: "02:42:ac:11:00:0e"
+    network_mode: "bridge"
+    ports:
+      - "8086:8086/tcp"
+    restart: "unless-stopped"
+    volumes:
+      - "/home/surya/NAS_STORAGE/influxdb/config:/etc/influxdb2"
+      - "/home/surya/NAS_STORAGE/influxdb/data:/var/lib/influxdb2"
+version: "3.6"
