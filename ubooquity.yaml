@@ -1,0 +1,18 @@
+services:
+  ubooquity:
+    image: lscr.io/linuxserver/ubooquity:2.1.2-ls14
+    container_name: ubooquity
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+  #    - MAXMEM= #optional
+    volumes:
+      - /home/surya/NAS_STORAGE/ubooquity/data:/config
+      - /home/surya/NAS_STORAGE/books:/books
+      - /home/surya/NAS_STORAGE/ubooquity/comics:/comics
+      #- /home/surya/NAS_STORAGE/ubooquity/files:/files
+    ports:
+      - 2202:2202
+      - 2203:2203
+    restart: unless-stopped
